@@ -1,8 +1,18 @@
+from typing import NoReturn
+
 from flask import Flask
 
-app = Flask(__name__)
+
+def _main() -> NoReturn:
+    flask_app = Flask(__name__)
+
+    @flask_app.route("/")
+    def hello():
+        return "Hello, World!"
+
+    flask_app.run()
+    exit()
 
 
-@app.route("/")
-def hello():
-    return "Hello, World!"
+if __name__ == '__main__':
+    _main()
