@@ -2,6 +2,8 @@ from typing import NoReturn
 
 from flask import Flask
 
+from Source.Python.api import register_endpoints
+
 
 def _construct_flask_app() -> Flask:
     flask_app = Flask(__name__)
@@ -9,6 +11,8 @@ def _construct_flask_app() -> Flask:
     @flask_app.route("/")
     def hello():
         return "Hello, World!"
+
+    register_endpoints(flask_app)
 
     return flask_app
 
