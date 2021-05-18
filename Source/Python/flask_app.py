@@ -16,7 +16,7 @@ def _construct_flask_app() -> Flask:
 def _main() -> NoReturn:
     flask_app = _construct_flask_app()
 
-    flask_app.run()
+    flask_app.run(host="0.0.0.0", port=9001)
     exit()
 
 
