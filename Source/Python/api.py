@@ -33,6 +33,15 @@ def register_endpoints(flask_app: Flask) -> None:
         response.content_type = "application/json"
         return response
 
+    @flask_app.route("/api/greeting/<language>", methods=["PUT"])
+    def api_greeting_language__put(language: str):
+        is_new_greeting = language in _GREETINGS_BY_LANGUAGE
+        greeting = request.data.decode("utf8")
+        _GREETINGS_BY_LANGUAGE[language] = greeting
+        response = make_response(f"Set greeting for {language} to be '{greeting}'", 201 if is_new_greeting else 200)
+        response.content_type = "application/json"
+        return response
+
 
 def _get_greeting_in(language: str) -> str:
     if language not in _GREETINGS_BY_LANGUAGE:
