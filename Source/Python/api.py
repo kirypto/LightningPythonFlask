@@ -23,6 +23,18 @@ def register_endpoints(flask_app: Flask) -> None:
         response.content_type = "application/json"
         return response
 
+    @flask_app.route("/api/greetings", methods=["PUT"])
+    def api_greetings__put():
+        greetings: dict = request.json
+        if type(greetings) is not dict or \
+                any(map(lambda x: type(x) is not str, list(greetings.keys()) + list(greetings.values()))):
+            raise ValueError("Body contents must be a dictionary of strings")
+        _GREETINGS_BY_LANGUAGE.clear()
+        _GREETINGS_BY_LANGUAGE.update(greetings)
+        response = make_response(dumps(_GREETINGS_BY_LANGUAGE), 200)
+        response.content_type = "application/json"
+        return response
+
     @flask_app.route("/api/greeting/<language>", methods=["GET"])
     def api_greeting_language__get(language: str):
         try:
